@@ -1,3 +1,27 @@
+import amazonLogo from "../assets/logos/amazon-160-svgrepo-com.svg";
+import amcLogo from "../assets/logos/AMC-Theatres-Logo.png";
+import amtrakLogo from "../assets/logos/amtrak_logo.png";
+import claudeLogo from "../assets/logos/claude_logo.jpeg";
+import NULogo from "../assets/logos/NU_logo.png";
+import cyclebarLogo from "../assets/logos/cyclebar_logo.png";
+//import facebookLogo from "../assets/logos/facebook-icon-logo-svgrepo-com.svg";
+import flightsLogo from "../assets/logos/flights_logo.png";
+import geminiLogo from "../assets/logos/gemini_logo.jpeg";
+import ikeaLogo from "../assets/logos/IKEA_logo.png";
+import ikonLogo from "../assets/logos/ikon_logo.jpg";
+//import instagramLogo from "../assets/logos/instagram-2016-logo-svgrepo-com.svg";
+import isicLogo from "../assets/logos/isic_logo.jpeg";
+import northwestFilmForumLogo from "../assets/logos/northwest_film_forum_logo.jpeg";
+import nushpLogo from "../assets/logos/NUSHP_logo.png";
+import rakutenLogo from "../assets/logos/rakuten_logo.png";
+import seattleChildLogo from "../assets/logos/seattle_child.png";
+import siffLogo from "../assets/logos/siff_logo.jpeg";
+import spotifyLogo from "../assets/logos/spotify-logo-svgrepo-com.svg";
+import targetLogo from "../assets/logos/target_logo.jpeg";
+import toogoodtogoLogo from "../assets/logos/toogoodtogo_logo.png";
+import yelpLogo from "../assets/logos/yelp_logo.png";
+import zipcarLogo from "../assets/logos/zipcar_logo.jpg";
+
 const allDeals = [
   {
     id: "entertainment_campus_events",
@@ -9,6 +33,7 @@ const allDeals = [
     benefit_type: "directory",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: NULogo,
   },
   {
     id: "entertainment_free_museum",
@@ -20,6 +45,7 @@ const allDeals = [
     benefit_type: "free_access",
     source_type: "third_party",
     last_verified: "2026-03-21",
+    image: seattleChildLogo,
   },
   {
     id: "entertainment_nwfilmforum",
@@ -31,6 +57,7 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: northwestFilmForumLogo,
   },
   {
     id: "entertainment_siff",
@@ -42,6 +69,7 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: siffLogo,
   },
   {
     id: "entertainment_spotify_hulu",
@@ -53,6 +81,7 @@ const allDeals = [
     benefit_type: "bundle",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: spotifyLogo,
   },
   {
     id: "entertainment_ikon_pass",
@@ -64,6 +93,7 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: ikonLogo,
   },
   {
     id: "transportation_zipcar",
@@ -75,6 +105,7 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: zipcarLogo,
   },
   {
     id: "wellness_cyclebar",
@@ -86,6 +117,7 @@ const allDeals = [
     benefit_type: "directory",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: cyclebarLogo,
   },
   {
     id: "wellness_gym_cashback_nushp",
@@ -97,6 +129,7 @@ const allDeals = [
     benefit_type: "reimbursement",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: nushpLogo,
   },
   {
     id: "food_tgtg",
@@ -108,6 +141,7 @@ const allDeals = [
     benefit_type: "platform",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: toogoodtogoLogo,
   },
   {
     id: "food_yelp",
@@ -119,6 +153,7 @@ const allDeals = [
     benefit_type: "platform",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: yelpLogo,
   },
   {
     id: "retail_computer_discounts",
@@ -130,6 +165,7 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: NULogo,
   },
   {
     id: "retail_amazon_prime",
@@ -141,6 +177,7 @@ const allDeals = [
     benefit_type: "subscription",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: amazonLogo,
   },
   {
     id: "retail_target",
@@ -152,6 +189,7 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: targetLogo,
   },
   {
     id: "retail_ikea",
@@ -163,6 +201,7 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: ikeaLogo,
   },
   {
     id: "retail_rakuten",
@@ -174,6 +213,7 @@ const allDeals = [
     benefit_type: "platform",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: rakutenLogo,
   },
   {
     id: "travel_amtrak",
@@ -185,6 +225,7 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: amtrakLogo,
   },
   {
     id: "travel_isic",
@@ -196,6 +237,19 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: isicLogo,
+  },
+  {
+    id: "entertainment_amc",
+    record_type: "benefit",
+    category: "entertainment",
+    name: "AMC theater",
+    url: "https://www.amctheatres.com/discounts/participating-theatres",
+    description: "Student discounts on selected AMC theaters",
+    benefit_type: "discount",
+    source_type: "official",
+    last_verified: "2026-03-21",
+    image: amcLogo,
   },
   {
     id: "travel_studentuniverse",
@@ -207,6 +261,7 @@ const allDeals = [
     benefit_type: "discount",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: flightsLogo,
   },
   {
     id: "technology_gemini",
@@ -218,6 +273,7 @@ const allDeals = [
     benefit_type: "free_access",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: geminiLogo 
   },
   {
     id: "technology_claude",
@@ -229,6 +285,7 @@ const allDeals = [
     benefit_type: "free_access",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: claudeLogo,
   },
   {
     id: "technology_tech_resource",
@@ -240,6 +297,7 @@ const allDeals = [
     benefit_type: "directory",
     source_type: "official",
     last_verified: "2026-03-21",
+    image: NULogo,
   },
 ];
 export default allDeals;

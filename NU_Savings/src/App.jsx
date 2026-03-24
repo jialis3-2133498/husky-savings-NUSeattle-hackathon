@@ -2,6 +2,9 @@ import homeTop from "./assets/images/home_top.png";
 import homeMiddle from "./assets/images/home_middle.png";
 import homeFoot from "./assets/images/home_foot.png";
 import allDeals from "./data/deals.js";
+import instagramLogo from "./assets/logos/instagram_logo.svg";
+import facebookLogo from "./assets/logos/facebookLogo.svg";
+import xLogo from "./assets/logos/x_logo.png";
 import { useEffect, useMemo, useState } from "react";
 
 const featuredDeals = [
@@ -303,15 +306,15 @@ const styles = {
     borderRadius: "18px",
   },
   iconCircle: {
-    width: "92px",
-    height: "92px",
+    width: "140px",
+    height: "140px",
     borderRadius: "50%",
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "42px",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+    margin: "0 auto 24px",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
   },
   dealBrand: {
     marginTop: "18px",
@@ -322,6 +325,11 @@ const styles = {
     marginTop: "14px",
     fontSize: "22px",
     lineHeight: 1.4,
+  },
+  logoImage: {
+    width: "68px",
+    height: "68px",
+    objectFit: "contain",
   },
   meta: {
     marginTop: "auto",
@@ -458,6 +466,27 @@ const styles = {
     inset: 0,
     backgroundColor: "rgba(0, 0, 0, 0.4)",
   },
+  footerIcons: {
+    display: "flex",
+    gap: "16px",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginBottom: "24px",
+    marginLeft: "0",
+  },
+
+  socialLink: {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textDecoration: "none",
+  },
+
+  socialIcon: {
+    width: "24px",
+    height: "24px",
+    objectFit: "contain",
+  },
 };
 
 function Navbar({ onNavigate, currentPage }) {
@@ -507,9 +536,32 @@ function Footer() {
     <footer id="contact" style={styles.footer}>
       <div style={styles.container}>
         <div style={styles.footerIcons}>
-          <span>📘</span>
-          <span>📸</span>
-          <span>✉️</span>
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noreferrer"
+            style={styles.socialLink}
+          >
+            <img src={facebookLogo} alt="Facebook" style={styles.socialIcon} />
+          </a>
+
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noreferrer"
+            style={styles.socialLink}
+          >
+            <img src={instagramLogo} alt="Instagram" style={styles.socialIcon} />
+          </a>
+
+          <a
+            href="https://x.com"
+            target="_blank"
+            rel="noreferrer"
+            style={styles.socialLink}
+          >
+            <img src={xLogo} alt="X" style={styles.socialIcon} />
+          </a>
         </div>
 
         <div style={styles.footerGrid}>
@@ -641,7 +693,9 @@ function HomePage({ onBrowse }) {
 function DiscountCard({ deal }) {
   return (
     <div style={styles.dealCard}>
-      <div style={styles.iconCircle}>🏷️</div>
+      <div style={styles.iconCircle}>
+        <img src={deal.image} alt={deal.name} style={styles.logoImage} />
+      </div>
 
       <h3 style={styles.dealBrand}>{deal.name}</h3>
       <p style={styles.dealTitle}>{deal.description || "Student discount available"}</p>
