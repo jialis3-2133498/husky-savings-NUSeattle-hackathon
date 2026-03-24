@@ -1,8 +1,7 @@
 import homeTop from "./assets/images/home_top.png";
 import homeMiddle from "./assets/images/home_middle.png";
 import homeFoot from "./assets/images/home_foot.png";
-import discount1 from "./assets/images/Discount_example1.png";
-import discount2 from "./assets/images/Discount_example2.png";
+import allDeals from "./data/deals.js";
 import { useEffect, useMemo, useState } from "react";
 
 const featuredDeals = [
@@ -26,91 +25,29 @@ const featuredDeals = [
   },
 ];
 
-const allDeals = [
-  {
-    brand: "Apple",
-    title: "Student Pricing on Mac and iPad",
-    category: "Education",
-    location: "Online",
-    verified: true,
-    icon: "💻",
-    link: "https://www.apple.com/education/",
-  },
-  {
-    brand: "Spotify",
-    title: "Premium Student Plan",
-    category: "Entertainment",
-    location: "Online",
-    verified: true,
-    icon: "🎵",
-    link: "https://www.spotify.com/us/student/",
-  },
-  {
-    brand: "Adobe",
-    title: "Creative Cloud Student Discount",
-    category: "Education",
-    location: "Online",
-    verified: true,
-    icon: "🎨",
-    link: "https://www.adobe.com/creativecloud/buy/students.html",
-  },
-  {
-    brand: "AMC",
-    title: "Discounted Student Movie Tickets",
-    category: "Entertainment",
-    location: "Seattle",
-    verified: true,
-    icon: "🎬",
-    link: "https://www.amctheatres.com/",
-  },
-  {
-    brand: "Chipotle",
-    title: "Student Meal Specials",
-    category: "Food & Dining",
-    location: "Seattle",
-    verified: true,
-    icon: "🌯",
-    link: "https://www.chipotle.com/",
-  },
-  {
-    brand: "Amazon",
-    title: "Prime Student Membership",
-    category: "Essentials",
-    location: "Online",
-    verified: true,
-    icon: "📦",
-    link: "https://www.amazon.com/amazonprime",
-  },
-  {
-    brand: "Headspace",
-    title: "Student Wellness Subscription",
-    category: "Essentials",
-    location: "Online",
-    verified: true,
-    icon: "🧘",
-    link: "https://www.headspace.com/studentplan",
-  },
-  {
-    brand: "Lyft",
-    title: "Student Ride Credits",
-    category: "Essentials",
-    location: "Seattle",
-    verified: true,
-    icon: "🚗",
-    link: "https://www.lyft.com/",
-  },
-  {
-    brand: "Seattle Pizza",
-    title: "15% off with student ID",
-    category: "Food & Dining",
-    location: "Seattle",
-    verified: true,
-    icon: "🍕",
-    link: "#",
-  },
+const categories = [
+  "All",
+  "campus_life",
+  "entertainment",
+  "transportation",
+  "wellness",
+  "food",
+  "retail",
+  "travel",
+  "technology",
 ];
 
-const categories = ["All", "Food & Dining", "Entertainment", "Education", "Essentials"];
+const categoryLabels = {
+  All: "All",
+  campus_life: "Campus Life",
+  entertainment: "Entertainment",
+  transportation: "Transportation",
+  wellness: "Wellness",
+  food: "Food",
+  retail: "Retail",
+  travel: "Travel",
+  technology: "Technology",
+};
 
 const styles = {
   page: {
@@ -702,26 +639,24 @@ function HomePage({ onBrowse }) {
 }
 
 function DiscountCard({ deal }) {
-  const label = deal.category.includes("Food")
-    ? "Food"
-    : deal.category.includes("Entertainment")
-    ? "Fun"
-    : deal.category.includes("Education")
-    ? "Tech"
-    : "Student";
-
   return (
     <div style={styles.dealCard}>
-      <div style={styles.iconCircle}>{deal.icon}</div>
-      <h3 style={styles.dealBrand}>{deal.brand}</h3>
-      <p style={styles.dealTitle}>{deal.title}</p>
+      <div style={styles.iconCircle}>🏷️</div>
 
-      <a href={deal.link} target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}>
+      <h3 style={styles.dealBrand}>{deal.name}</h3>
+      <p style={styles.dealTitle}>{deal.description || "Student discount available"}</p>
+
+      <a
+        href={deal.url}
+        target="_blank"
+        rel="noreferrer"
+        style={{ textDecoration: "none", marginTop: "20px" }}
+      >
         <button style={styles.primaryButton}>Learn More</button>
       </a>
 
       <p style={styles.meta}>
-        {label} · {deal.location} · {deal.verified ? "Verified" : "Unverified"}
+        {deal.category} · {deal.benefit_type || "Offer"} · {deal.last_verified || "Unverified"}
       </p>
     </div>
   );
@@ -737,13 +672,11 @@ function DiscountsPage() {
     return allDeals.filter((deal) => {
       const matchesCategory = activeCategory === "All" || deal.category === activeCategory;
       const q = query.toLowerCase();
-
       const matchesQuery =
-        deal.brand.toLowerCase().includes(q) ||
-        deal.title.toLowerCase().includes(q) ||
-        deal.category.toLowerCase().includes(q) ||
-        deal.location.toLowerCase().includes(q);
-
+        (deal.name || "").toLowerCase().includes(q) ||
+        (deal.description || "").toLowerCase().includes(q) ||
+        (deal.category || "").toLowerCase().includes(q) ||
+        (deal.benefit_type || "").toLowerCase().includes(q);
       return matchesCategory && matchesQuery;
     });
   }, [query, activeCategory]);
@@ -786,7 +719,7 @@ function DiscountsPage() {
                 ...(activeCategory === category ? styles.filterButtonActive : {}),
               }}
             >
-              {category}
+              {categoryLabels[category]}
             </button>
           ))}
         </div>
@@ -795,7 +728,7 @@ function DiscountsPage() {
       <section style={styles.container}>
         <div style={styles.dealsGrid}>
           {pagedDeals.map((deal, index) => (
-            <DiscountCard key={`${deal.brand}-${index}`} deal={deal} />
+            <DiscountCard key={deal.id} deal={deal} />
           ))}
         </div>
 
