@@ -487,6 +487,50 @@ const styles = {
     height: "24px",
     objectFit: "contain",
   },
+  budgetSection: {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "60px 24px 50px",
+    textAlign: "center",
+  },
+
+  budgetTitle: {
+    fontSize: "48px",
+    fontWeight: "700",
+    color: "#222",
+    marginBottom: "16px",
+  },
+    budgetSubtitle: {
+    fontSize: "22px",
+    color: "#555",
+    marginBottom: "32px",
+    lineHeight: 1.5,
+  },
+  budgetGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: "24px",
+    marginBottom: "28px",
+  },
+
+  budgetCard: {
+    backgroundColor: "#ffffff",
+    borderRadius: "20px",
+    padding: "28px 20px",
+    fontSize: "22px",
+    fontWeight: "600",
+    color: "#222",
+    lineHeight: 1.4,
+    boxShadow: "0 6px 18px rgba(0, 0, 0, 0.08)",
+  },
+
+  budgetNote: {
+    fontSize: "20px",
+    color: "#555",
+    maxWidth: "760px",
+    margin: "0 auto",
+    lineHeight: 1.6,
+  },
 };
 
 function Navbar({ onNavigate, currentPage }) {
@@ -589,8 +633,8 @@ function HomePage({ onBrowse }) {
   return (
     <main>
       <section style={{ ...styles.container, ...styles.heroTop }}>
-        <p style={styles.smallText}>Verified discounts for Northeastern students in Seattle</p>
-        <h1 style={styles.title}>Husky Student Savings</h1>
+        <p style={styles.smallText}>Browse verified deals, campus benefits, and local perks for Northeastern students.</p>
+        <h1 style={styles.title}>Your Hub for Student Discounts in Seattle</h1>
 
         <button onClick={onBrowse} style={styles.primaryButton}>
           Browse Discounts
@@ -635,6 +679,7 @@ function HomePage({ onBrowse }) {
           </div>
         </div>
       </section>
+
       <section style={styles.container}>
         <div style={styles.middleImageCard}>
           <img
@@ -643,6 +688,23 @@ function HomePage({ onBrowse }) {
             style={styles.middleImage}
           />
         </div>
+      </section>
+
+      <section style={styles.budgetSection}>
+        <h2 style={styles.budgetTitle}>Get More from the Same Budget</h2>
+        <p style={styles.budgetSubtitle}>
+          Small student benefits can make a real difference.
+        </p>
+
+        <div style={styles.budgetGrid}>
+          <div style={styles.budgetCard}>Free museum days</div>
+          <div style={styles.budgetCard}>Affordable food deals near campus</div>
+          <div style={styles.budgetCard}>Student discounts on subscriptions</div>
+        </div>
+
+        <p style={styles.budgetNote}>
+          Using several perks together can help students save more every day.
+        </p>
       </section>
 
       <section style={{ ...styles.container, paddingBottom: "40px" }}>
@@ -661,7 +723,7 @@ function HomePage({ onBrowse }) {
           ))}
         </div>
       </section>
-      
+
       <section style={styles.container}>
         <div style={styles.footerHeroCard}>
           <img
