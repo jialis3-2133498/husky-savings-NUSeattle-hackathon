@@ -7,7 +7,7 @@ export default function DiscountCard({ deal }) {
   const imageSrc = hasImageError ? getFallbackDealImage() : deal.image;
 
   return (
-    <article style={styles.dealCard}>
+    <article className="deal-card" style={styles.dealCard}>
       <div style={styles.iconCircle}>
         <img
           src={imageSrc}
@@ -26,9 +26,10 @@ export default function DiscountCard({ deal }) {
         href={deal.url}
         target="_blank"
         rel="noreferrer"
-        style={{ textDecoration: "none", marginTop: "20px" }}
+        className="deal-card-link"
+        style={{ textDecoration: "none", marginTop: "20px", width: "100%" }}
       >
-        <button style={styles.primaryButton}>Learn More</button>
+        <button className="deal-card-button" style={styles.primaryButton}>Learn More</button>
       </a>
 
       <p style={styles.meta}>

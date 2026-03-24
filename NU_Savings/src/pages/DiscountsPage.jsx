@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import DiscountCard from "../components/DiscountCard";
+import PaginationControls from "../components/PaginationControls";
 import { categories, categoryLabels } from "../constants/deals";
 import { loadDeals } from "../lib/dealsApi";
 import { styles } from "../styles/appStyles";
@@ -65,13 +66,13 @@ export default function DiscountsPage() {
 
   return (
     <main>
-      <section style={{ ...styles.container, ...styles.section }}>
+      <section className="discounts-hero-section" style={{ ...styles.container, ...styles.section }}>
         <h1 style={styles.sectionTitle}>Discounts for Northeastern Students</h1>
         <p style={styles.sectionDesc}>
           Explore food, entertainment, education, and everyday student deals near campus.
         </p>
 
-        <div style={styles.searchWrap}>
+        <div className="search-wrap" style={styles.searchWrap}>
           <span aria-hidden="true" style={{ color: "#666", fontSize: "18px" }}>
             🔍
           </span>
@@ -87,7 +88,7 @@ export default function DiscountsPage() {
           />
         </div>
 
-        <div style={styles.filters}>
+        <div className="filters-wrap" style={styles.filters}>
           {categories.map((category) => (
             <button
               key={category}
@@ -136,7 +137,7 @@ export default function DiscountsPage() {
       ) : null}
 
       {!isLoading && !error ? (
-        <section className="deferred-section" style={styles.container}>
+        <section className="deferred-section discounts-results-section" style={styles.container}>
           <div className="deals-grid" style={styles.dealsGrid}>
             {pagedDeals.map((deal) => (
               <DiscountCard key={deal.id} deal={deal} />
@@ -152,27 +153,11 @@ export default function DiscountsPage() {
             </div>
           ) : null}
 
-          <div style={styles.pager}>
-            <button
-              style={styles.pagerButton}
-              onClick={() => setPage((currentPage) => Math.max(1, currentPage - 1))}
-              disabled={page === 1}
-            >
-              Prev
-            </button>
-
-            <span>
-              {page} / {totalPages}
-            </span>
-
-            <button
-              style={styles.pagerButton}
-              onClick={() => setPage((currentPage) => Math.min(totalPages, currentPage + 1))}
-              disabled={page === totalPages}
-            >
-              Next
-            </button>
-          </div>
+          <PaginationControls
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
         </section>
       ) : null}
     </main>

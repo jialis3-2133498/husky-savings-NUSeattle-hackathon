@@ -21,7 +21,7 @@ export default function HomePage({ onBrowse }) {
         </button>
       </section>
 
-      <section style={styles.container}>
+      <section className="hero-media-section" style={styles.container}>
         <div style={styles.fullImageCard}>
           <img
             src={homeTop}
@@ -33,7 +33,7 @@ export default function HomePage({ onBrowse }) {
         </div>
       </section>
 
-      <section className="deferred-section" style={{ ...styles.container, ...styles.section }}>
+      <section className="deferred-section home-intro-section" style={{ ...styles.container, ...styles.section }}>
         <h2 style={styles.sectionTitle}>What We Do</h2>
         <p style={styles.smallText}>How it helps:</p>
         <p style={styles.sectionDesc}>
@@ -62,7 +62,7 @@ export default function HomePage({ onBrowse }) {
         </div>
       </section>
 
-      <section className="deferred-section" style={styles.container}>
+      <section className="deferred-section home-image-section" style={styles.container}>
         <div style={styles.middleImageCard}>
           <img
             src={homeMiddle}
@@ -89,14 +89,14 @@ export default function HomePage({ onBrowse }) {
         </p>
       </section>
 
-      <section className="deferred-section" style={{ ...styles.container, paddingBottom: "40px" }}>
+      <section className="deferred-section featured-section" style={{ ...styles.container, paddingBottom: "40px" }}>
         <h2 style={{ ...styles.sectionTitle, textAlign: "center" }}>Featured Deals</h2>
         <div className="featured-deals-grid" style={styles.featuredDealsGrid}>
           {featuredDeals.map((deal) => (
             <div key={deal.brand} style={styles.featuredCard}>
               <div style={styles.featuredEmoji}>{deal.image}</div>
-              <h3 style={{ fontSize: "28px", marginBottom: "10px" }}>{deal.brand}</h3>
-              <p style={{ fontSize: "22px", lineHeight: 1.4 }}>{deal.title}</p>
+              <h3 className="featured-brand" style={{ fontSize: "clamp(24px, 3vw, 28px)", marginBottom: "10px" }}>{deal.brand}</h3>
+              <p className="featured-title" style={{ fontSize: "clamp(17px, 2.7vw, 22px)", lineHeight: 1.4 }}>{deal.title}</p>
               <p style={{ color: "#666", marginTop: "8px" }}>{deal.subtitle}</p>
               <p style={{ color: "#666", marginTop: "12px" }}>
                 {deal.category} · {deal.location} · {deal.verified ? "Verified" : "Unverified"}
@@ -106,11 +106,12 @@ export default function HomePage({ onBrowse }) {
         </div>
       </section>
 
-      <section className="deferred-section" style={styles.container}>
-        <div style={styles.footerHeroCard}>
+      <section className="deferred-section footer-hero-section" style={styles.container}>
+        <div className="footer-hero-card" style={styles.footerHeroCard}>
           <img
             src={homeFoot}
             alt="Share student deals"
+            className="footer-hero-image"
             style={styles.footerHeroImage}
             loading="lazy"
             decoding="async"
@@ -118,8 +119,8 @@ export default function HomePage({ onBrowse }) {
 
           <div style={styles.footerHeroShade}></div>
 
-          <div style={styles.footerHeroOverlay}>
-            <h2 style={styles.footerHeroTitle}>Know a Student Deal? Share It With Us</h2>
+          <div className="footer-hero-overlay" style={styles.footerHeroOverlay}>
+            <h2 className="footer-hero-title" style={styles.footerHeroTitle}>Know a Student Deal? Share It With Us</h2>
 
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSf6cj9893lkCZSEnYhZO6Tvl035lDGk0FcpeNm8575fbrWOEg/viewform?usp=publish-editor"
@@ -127,7 +128,7 @@ export default function HomePage({ onBrowse }) {
               rel="noreferrer"
               style={{ textDecoration: "none" }}
             >
-              <button style={styles.footerHeroButton}>Submit a Discount</button>
+              <button className="footer-hero-button" style={styles.footerHeroButton}>Submit a Discount</button>
             </a>
           </div>
         </div>

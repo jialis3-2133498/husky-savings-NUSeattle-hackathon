@@ -41,9 +41,23 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function handleContactNavigation() {
+    if (currentPage !== "home") {
+      navigate("home");
+    }
+
+    window.setTimeout(() => {
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    }, 80);
+  }
+
   return (
     <div style={styles.page}>
-      <Navbar currentPage={currentPage} onNavigate={navigate} />
+      <Navbar
+        currentPage={currentPage}
+        onNavigate={navigate}
+        onContactNavigate={handleContactNavigation}
+      />
       {currentPage === "home" ? (
         <HomePage onBrowse={() => navigate("discounts")} />
       ) : (
