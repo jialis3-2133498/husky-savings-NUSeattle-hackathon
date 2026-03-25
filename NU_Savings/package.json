@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "sync:deals": "node ./scripts/sync-deals.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

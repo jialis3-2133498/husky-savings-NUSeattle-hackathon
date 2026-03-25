@@ -20,6 +20,7 @@
 - 首页内容优先加载，折扣目录页按需加载
 - 优惠数据来自静态 JSON 文件，适合 GitHub Pages
 - 构建后输出到 `NU_Savings/dist/`
+- 支持在构建前从 Google Sheets CSV 同步折扣数据
 
 仓库链接：
 
@@ -123,14 +124,22 @@ npm run preview
 
 ```bash
 npm run lint
+npm run sync:deals
 npm run build
 ```
 
 ## 6. 优惠数据如何修改
 
-当前网站使用静态数据文件：
+当前网站对外仍然使用静态数据文件：
 
 `NU_Savings/public/data/deals.json`
+
+推荐的数据维护方式已经改为：
+
+- 日常内容维护在 Google Sheets
+- 构建前执行同步脚本
+- 由脚本生成新的 `deals.json`
+- 如果同步失败，则继续使用仓库中已有的旧 `deals.json`
 
 每一条数据的基本结构示例：
 
@@ -182,6 +191,58 @@ npm run build
 ```
 
 如果 JSON 格式写错，构建或运行时会出问题。
+
+## 6.1 Google Sheets 同步方案
+
+当前项目已支持在构建前同步 Google Sheets CSV 数据。
+
+默认约定：
+
+- Google Sheets 使用公开 CSV 导出链接
+- 表头尽量与当前 `deals.json` 字段保持一致
+- `image` 字段建议存相对路径，例如：
+
+```text
+logos/target_logo.jpeg
+```
+
+支持的主要字段：
+
+- `id`
+- `record_type`
+- `category`
+- `name`
+- `url`
+- `description`
+- `benefit_type`
+- `source_type`
+- `last_verified`
+- `image`
+
+推荐在 GitHub 仓库中配置一个 secret：
+
+```text
+SHEETS_CSV_URL
+```
+
+本地手动同步命令：
+
+```bash
+cd NU_Savings
+SHEETS_CSV_URL="your_google_sheets_csv_url" npm run sync:deals
+```
+
+如果没有配置 `SHEETS_CSV_URL`，同步脚本会：
+
+- 跳过同步
+- 保留现有 `public/data/deals.json`
+- 不阻断后续构建
+
+如果拉取 Google Sheets 失败，脚本也会：
+
+- 输出 warning
+- 保留旧数据
+- 允许构建继续执行
 
 ## 7. 图片资源如何替换
 
@@ -235,6 +296,7 @@ git pull
 cd NU_Savings
 npm ci
 npm run lint
+SHEETS_CSV_URL="your_google_sheets_csv_url" npm run sync:deals
 npm run build
 npm run preview
 ```
@@ -260,6 +322,18 @@ npm run preview
 
 - `main`
 - `master`
+
+此外，工作流会每 24 小时自动触发一次定时构建更新。
+
+构建前，GitHub Actions 会尝试执行：
+
+```bash
+npm run sync:deals
+```
+
+如果同步成功，会使用新生成的静态数据部署。
+
+如果同步失败，则保留仓库中已有的 `deals.json` 并继续构建与部署。
 
 也可以手动触发部署：
 
@@ -445,6 +519,7 @@ npm run build
 - `deals.json` 是否格式错误
 - 图片路径是否写错
 - 代码是否存在语法错误
+- `SHEETS_CSV_URL` 是否未配置或失效
 
 ### 13.5 `npm run lint` 失败
 
@@ -486,6 +561,7 @@ npm run build
 - `.github/workflows/deploy.yml`
 - `NU_Savings/vite.config.js`
 - `NU_Savings/public/data/deals.json`
+- `NU_Savings/scripts/sync-deals.mjs`
 - `NU_Savings/src/pages/HomePage.jsx`
 - `NU_Savings/src/pages/DiscountsPage.jsx`
 
