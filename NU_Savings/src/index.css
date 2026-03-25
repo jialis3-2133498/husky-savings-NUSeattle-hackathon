@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -8,10 +10,13 @@ html {
 
 body {
   margin: 0;
+  font-family: 'Lato', Arial, Helvetica, sans-serif;
 }
 
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
 }
 

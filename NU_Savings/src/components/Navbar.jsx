@@ -26,6 +26,11 @@ export default function Navbar({ currentPage, onNavigate, onContactNavigate }) {
       onNavigate(item.page);
       return;
     }
+    
+    if (item.type === "link") {
+      window.open(item.href, "_blank", "noopener,noreferrer");
+      return;
+    }
 
     if (item.action === "contact") {
       onContactNavigate();

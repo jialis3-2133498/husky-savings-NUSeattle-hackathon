@@ -132,6 +132,22 @@ export default function HomePage({ onBrowse }) {
             </a>
           </div>
         </div>
+
+      </section>
+            <section className="deferred-section" style={{ ...styles.container, ...styles.section }}>
+        <h2 style={styles.sectionTitle}>Partner With Us</h2>
+        <p style={styles.sectionDesc}>
+          Are you a local business that wants to support Northeastern students?
+          Partner with Husky Savings and share your student offers with our campus community.
+        </p>
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdpBb0NsQrcgQbwC6qGpQHmQ4yanq6ocHlXpbCPuUq3k9rPog/viewform?usp=dialog"
+          target="_blank"
+          rel="noreferrer"
+          style={{ textDecoration: "none" }}
+        >
+          <button style={styles.primaryButton}>Partner With Us</button>
+        </a>
       </section>
     </main>
   );

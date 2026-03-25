@@ -3,7 +3,6 @@ export const styles = {
     minHeight: "100vh",
     backgroundColor: "#f7f5f1",
     color: "#222",
-    fontFamily: "Arial, sans-serif",
   },
   container: {
     maxWidth: "1200px",
