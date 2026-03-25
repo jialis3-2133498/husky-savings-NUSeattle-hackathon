@@ -28,6 +28,8 @@ See [DEPLOYMENT.md](/Users/yuhaos/Desktop/husky-savings-NUSeattle-hackathon/DEPL
 
 Assets are organized so teammates can add, remove, or replace files without editing component imports one by one.
 
+The project now supports syncing deal data from a Google Sheets CSV export before build time. If the sync fails, deployment keeps using the last committed `deals.json` snapshot so the static site can continue to ship safely.
+
 ## Local Development
 
 ```bash
