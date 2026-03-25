@@ -1,0 +1,44 @@
+{
+  "socialLinks": [
+    {
+      "label": "Facebook",
+      "href": "https://facebook.com",
+      "icon": "logos/facebookLogo.svg"
+    },
+    {
+      "label": "Instagram",
+      "href": "https://instagram.com",
+      "icon": "logos/instagram_logo.svg"
+    },
+    {
+      "label": "X",
+      "href": "https://x.com",
+      "icon": "logos/x_logo.png"
+    }
+  ],
+  "homeImages": {
+    "hero": "images/home_top.jpg",
+    "middle": "images/home_middle.jpg",
+    "footer": "images/home_foot.jpg"
+  },
+  "featuredDeals": [
+    {
+      "brand": "Seattle Pizza",
+      "title": "Save 15% on any pizza",
+      "subtitle": "with your student ID",
+      "category": "Food & Dining",
+      "location": "Seattle",
+      "verified": true,
+      "image": "🍕"
+    },
+    {
+      "brand": "Campus Coffee",
+      "title": "Get 10% off any coffee drink",
+      "subtitle": "with your student ID",
+      "category": "Food & Dining",
+      "location": "Seattle",
+      "verified": true,
+      "image": "☕"
+    }
+  ]
+}
