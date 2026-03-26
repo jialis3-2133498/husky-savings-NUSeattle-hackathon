@@ -1,13 +1,16 @@
 # Husky Student Savings
 
-Husky Student Savings is a static discount aggregation website built for the Northeastern University Seattle Emerald Forge Hackathon. The site organizes discounts, perks, and campus resources into a structured and centralized experience for NU Seattle students.
+Husky Student Savings is a static discount aggregation website built for the Northeastern University Seattle Emerald Forge Hackathon. The site is inspired by university discount portals and aims to provide NU Seattle students with a centralized place to browse verified deals, student benefits, and local savings opportunities.
 
 ## Repository Structure
 
-- `NU_Savings/`: Vite + React frontend application
-- `docs/`: supporting project documentation
-- `DEPLOYMENT.md`: deployment and release instructions
+- `NU_Savings/`: the Vite + React frontend application
+- `DEPLOYMENT.md`: deployment, release, and daily-use instructions for teammates
 - `.github/workflows/deploy.yml`: GitHub Pages deployment workflow
+
+## Deployment
+
+See [DEPLOYMENT.md](/Users/yuhaos/Desktop/husky-savings-NUSeattle-hackathon/DEPLOYMENT.md) for the full setup, release flow, and GitHub Pages deployment instructions.
 
 ## Tech Stack
 
@@ -18,31 +21,14 @@ Husky Student Savings is a static discount aggregation website built for the Nor
 
 ## Data and Assets
 
-- Data: `NU_Savings/public/data/deals.json`
-- Content config: `NU_Savings/src/data/siteContent.json`
+- Discount data: `NU_Savings/public/data/deals.json`
+- Site content config: `NU_Savings/src/data/siteContent.json`
 - Logos: `NU_Savings/public/logos/`
-- Images: `NU_Savings/public/images/`
+- Homepage images: `NU_Savings/public/images/`
 
 Assets are organized so teammates can add, remove, or replace files without editing component imports one by one.
 
-## Data Design
-
-Each entry includes:
-
-- type (`benefit` vs `resource`)
-- category (e.g. food, travel, technology)
-- value type (e.g. discount, platform, reimbursement)
-- source type and verification timestamp
-
-This makes the dataset easier to search, maintain, and scale.
-
-See [`docs/schema.md`](./docs/schema.md) for the full schema.
-
-## Data Flow
-
-Google Sheet → Apps Script → JSON → Frontend
-
-This lightweight pipeline keeps the project easy to update without requiring a complex backend.
+The project now supports syncing deal data from a Google Sheets CSV export before build time. If the sync fails, deployment keeps using the last committed `deals.json` snapshot so the static site can continue to ship safely.
 
 ## Local Development
 
@@ -59,7 +45,3 @@ cd NU_Savings
 npm run lint
 npm run build
 ```
-
-## Deployment
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for the full setup, release flow, and GitHub Pages deployment instructions.
