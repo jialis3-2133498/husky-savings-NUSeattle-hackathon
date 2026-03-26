@@ -13,6 +13,7 @@ const HEADER_ALIASES = {
   "record type": "record_type",
   record_type: "record_type",
   category: "category",
+  "category ": "category", // handle trailing space from Google Sheets
   name: "name",
   url: "url",
   description: "description",
@@ -23,6 +24,8 @@ const HEADER_ALIASES = {
   "last verified": "last_verified",
   last_verified: "last_verified",
   image: "image",
+  "logo path": "image",
+  "logo": "image",
 };
 
 function log(message) {
@@ -44,6 +47,20 @@ function normalizeValue(value) {
   return String(value ?? "").trim();
 }
 
+function normalizeDate(value) {
+  const str = normalizeValue(value);
+  if (!str) return new Date().toISOString().slice(0, 10);
+
+  // Already YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+
+  // Try parsing other formats (e.g. MM/DD/YYYY)
+  const parsed = new Date(str);
+  if (!isNaN(parsed.getTime())) return parsed.toISOString().slice(0, 10);
+
+  return new Date().toISOString().slice(0, 10);
+}
+
 function parseCsvLine(line) {
   const values = [];
   let current = "";
@@ -60,7 +77,6 @@ function parseCsvLine(line) {
       } else {
         insideQuotes = !insideQuotes;
       }
-
       continue;
     }
 
@@ -102,7 +118,6 @@ function parseCsv(text) {
         currentLine += nextChar;
         index += 1;
       }
-
       lines.push(currentLine.replace(/\r?\n$/, ""));
       currentLine = "";
     }
@@ -120,11 +135,7 @@ function mapRow(headers, values) {
 
   headers.forEach((header, index) => {
     const canonicalHeader = HEADER_ALIASES[normalizeHeader(header)];
-
-    if (!canonicalHeader) {
-      return;
-    }
-
+    if (!canonicalHeader) return;
     mapped[canonicalHeader] = normalizeValue(values[index]);
   });
 
@@ -147,11 +158,11 @@ function normalizeDeal(row, index) {
     category,
     name,
     url,
-    description: normalizeValue(row.description),
+    description: normalizeValue(row.description) || "",
     benefit_type: normalizeValue(row.benefit_type) || "discount",
     source_type: normalizeValue(row.source_type) || "official",
-    last_verified: normalizeValue(row.last_verified),
-    image: normalizeValue(row.image),
+    last_verified: normalizeDate(row.last_verified),
+    image: normalizeValue(row.image) || "",
   };
 }
 
@@ -178,9 +189,7 @@ async function main() {
   log(`Loaded ${existingDeals.length} existing deals as fallback.`);
 
   const response = await fetch(csvUrl, {
-    headers: {
-      Accept: "text/csv",
-    },
+    headers: { Accept: "text/csv" },
   });
 
   if (!response.ok) {
