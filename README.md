@@ -1,10 +1,12 @@
 # Husky Student Savings
 
 🔗 Live Demo: https://jialis3-2133498.github.io/husky-savings-NUSeattle-hackathon/
+📦 Repository: https://github.com/jialis3-2133498/husky-savings-NUSeattle-hackathon
+✨ Built for Northeastern University Seattle Emerald Forge Hackathon
 
-Husky Student Savings is a curated discount aggregation platform built for Northeastern University Seattle students.
+A structured discount aggregation platform for Northeastern University Seattle students.
 
-Instead of presenting scattered deals, we transform fragmented information into a structured, queryable system — making it easier for students to discover, compare, and benefit from available resources.
+Instead of listing scattered deals, this project transforms fragmented information into a structured, queryable system — making student benefits easier to discover and maintain.
 
 ---
 
@@ -131,3 +133,22 @@ See `DEPLOYMENT.md` for full deployment and GitHub Pages setup.
 
 ---
 
+## Team Contributions
+
+* **Data & Product (Nan Zhang)**
+
+  * Led data collection and curation of student benefits
+  * Designed the structured schema for normalizing different types of offers
+  * Defined data standards to ensure consistency and scalability
+
+* **Frontend Engineering (Jiali Sheng)**
+
+  * Developed the React-based user interface
+  * Implemented data rendering and user interaction flows
+  * Ensured responsive and user-friendly design
+
+* **Backend & Data Integration (YuhaoSong)**
+
+  * Built and maintained data synchronization logic
+  * Designed the update pipeline (Google Sheets → JSON)
+  * Supported data consistency and system maintainability
