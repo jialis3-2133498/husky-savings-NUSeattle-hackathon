@@ -1,130 +1,125 @@
 # Update Log
 
-## 2026.3.25 update
+## 2026.3.25 Update
 
-本次更新确认了网站后续数据更新方案将优先采用：
+This update confirmed that the site's data update strategy going forward will prioritize:
 
-- 保留 `Vite + React + GitHub Pages`
-- 不迁移到 Next.js
-- 不引入 ISR
-- 采用“定时构建更新”的静态站方案
+- Keeping `Vite + React + GitHub Pages`
+- No migration to Next.js
+- No adoption of ISR (Incremental Static Regeneration)
+- A **scheduled build update** approach for the static site
 
-该方案的核心思路是：
+The core idea of this approach is:
 
-- 前端继续保持静态站结构
-- 网站线上继续读取静态数据文件
-- 数据源与前端仓库解耦
-- 通过 GitHub Actions 定时拉取数据源并重新生成静态数据
-- 构建成功后自动重新部署 GitHub Pages
+- The frontend remains a static site
+- The live site continues to read from static data files
+- The data source is decoupled from the frontend repository
+- GitHub Actions periodically pulls from the data source and regenerates the static data
+- A successful build automatically redeploys to GitHub Pages
 
-相较于当前纯手动维护 `deals.json` 的方式，该方案的优势主要包括：
+Compared to the current fully manual `deals.json` maintenance, the key advantages of this approach are:
 
-### 1. 数据更新流程更清晰
+### 1. Cleaner Data Update Workflow
 
-- 优惠内容未来可以集中维护在单独的数据源中，例如 Google Sheets
-- 组员不必每次都直接修改前端仓库中的 JSON 文件
-- 内容维护与代码维护可以分离，降低误操作风险
+- Deal content can be centrally maintained in a separate data source such as Google Sheets
+- Team members no longer need to directly edit JSON files in the frontend repo
+- Content maintenance and code maintenance are separated, reducing the risk of accidental changes
 
-### 2. 不直接暴露实时数据源
+### 2. No Direct Exposure of the Live Data Source
 
-- 前端仍然只读取静态快照
-- 浏览器不会直接连接实时 Google Sheets 或其他实时源
-- 可以避免把真实数据源地址和实时请求链路直接暴露给访问者
+- The frontend still only reads from a static snapshot
+- The browser never connects directly to a live Google Sheet or other real-time source
+- Prevents the actual data source URL and live request chain from being exposed to visitors
 
-### 3. 部署稳定性更高
+### 3. Higher Deployment Stability
 
-- 即使外部数据源短时间不可用，线上仍可保留上一次成功构建的静态版本
-- 不会因为用户访问时请求实时接口失败而导致页面直接出错
-- 更适合 GitHub Pages 的纯静态托管方式
+- Even if the external data source is temporarily unavailable, the live site retains the last successful static build
+- Pages won't break due to failed real-time API calls during user visits
+- Better suited to GitHub Pages' purely static hosting model
 
-### 4. 保留当前静态站性能优势
+### 4. Preserves Current Static Site Performance
 
-- 首页和列表页继续读取静态资源
-- 不引入额外的服务端实时计算
-- 页面加载速度和缓存能力可以继续保持
+- Homepage and listing pages continue to load from static assets
+- No additional server-side real-time computation introduced
+- Page load speed and caching behavior remain intact
 
-### 5. 便于加入数据校验
+### 5. Easier to Add Data Validation
 
-- 在定时生成 `deals.json` 之前，可以加入字段格式检查
-- 可以自动验证分类、链接、日期、图片路径等内容是否正确
-- 有助于降低错误数据上线的概率
+- Field format checks can be added before `deals.json` is generated
+- Categories, links, dates, and image paths can be automatically validated
+- Reduces the chance of bad data making it to production
 
-### 6. 更适合长期内容运营
+### 6. Better Suited for Long-Term Content Operations
 
-- 网站可以逐步从“手动更新的演示站”过渡为“内容源驱动的稳定站点”
-- 后续如果内容量增大，这种模式比手改 JSON 更容易扩展
+- The site can gradually transition from a "manually updated demo site" to a "content-source-driven stable site"
+- As content volume grows, this model scales far more easily than hand-editing JSON
 
-### 7. 不需要推翻当前技术栈
+### 7. No Need to Overhaul the Current Stack
 
-- 不需要迁移到 Next.js
-- 不需要重写现有页面
-- 不需要放弃 GitHub Pages
-- 风险和改造成本明显低于更换整套框架
+- No migration to Next.js
+- No rewriting of existing pages
+- No abandoning GitHub Pages
+- Significantly lower risk and cost compared to replacing the entire framework
 
-当前结论：
+**Current conclusion:**
 
-- 方案一适合作为下一阶段的数据更新架构方向
-- 它提升的是“数据同步方式、更新稳定性、源数据暴露控制”
-- 它并不等同于真正的防爬机制，但更适合当前项目阶段与部署条件
+- This approach is the recommended direction for the next phase of data update architecture
+- It improves data sync workflow, update stability, and control over raw data exposure
+- It is not a true anti-scraping mechanism, but it is the most appropriate solution given the current project stage and deployment environment
 
-随后已按该方案完成第一版代码落地：
+The first implementation of this approach has been completed:
 
-- 新增构建前同步脚本：
-  - `NU_Savings/scripts/sync-deals.mjs`
-- 新增 npm 命令：
-  - `npm run sync:deals`
-- GitHub Actions 在构建前会尝试从 Google Sheets CSV 同步数据
-- 当 `SHEETS_CSV_URL` 未配置或拉取失败时：
-  - 保留仓库中已有的 `NU_Savings/public/data/deals.json`
-  - 不阻断构建与部署
-- 前端页面继续读取静态 `deals.json`
-- 已同步更新部署文档与仓库说明文档
+- New pre-build sync script added: `NU_Savings/scripts/sync-deals.mjs`
+- New npm command added: `npm run sync:deals`
+- GitHub Actions will attempt to sync data from the Google Sheets CSV before building
+- If `SHEETS_CSV_URL` is not configured or the fetch fails:
+  - The existing `NU_Savings/public/data/deals.json` in the repo is retained
+  - The build and deployment are not blocked
+- The frontend continues to read from the static `deals.json`
+- Deployment documentation and repository docs have been updated accordingly
 
-## 2026.3.24 update
+---
 
-本次更新主要围绕加载速度、部署稳定性、资源可维护性和团队文档整理展开。
+## 2026.3.24 Update
 
-### 1. 页面结构与加载优化
+This update focused on load speed, deployment stability, asset maintainability, and team documentation.
 
-- 将原本集中在单个 `App.jsx` 中的页面逻辑拆分为多个模块：
+### 1. Page Structure & Load Optimization
+
+- Refactored page logic that was previously concentrated in a single `App.jsx` into separate modules:
   - `Navbar`
   - `Footer`
   - `DiscountCard`
   - `HomePage`
   - `DiscountsPage`
-- 将折扣目录页改为按需懒加载，减少首页首屏加载压力。
-- 将优惠数据改为通过静态 JSON 文件读取，而不是直接打入首页主包。
-- 新增加载态和错误态展示，提升页面在数据加载失败时的稳定性。
+- Changed the discounts directory page to lazy-load on demand, reducing initial homepage load pressure
+- Deal data is now read from a static JSON file instead of being bundled into the main homepage package
+- Added loading and error states to improve page stability when data fails to load
 
-### 2. 数据与资源管理优化
+### 2. Data & Asset Management
 
-- 优惠数据统一放入：
-  - `NU_Savings/public/data/deals.json`
-- Logo 资源统一放入：
-  - `NU_Savings/public/logos/`
-- 首页图片统一放入：
-  - `NU_Savings/public/images/`
-- 新增站点内容配置文件：
-  - `NU_Savings/src/data/siteContent.json`
-- Footer 社交 logo、首页主图、featured deals 等内容不再分散硬编码在组件中，而是通过统一配置读取。
-- 新增资源路径解析工具：
-  - `NU_Savings/src/lib/assets.js`
+- Deal data consolidated into: `NU_Savings/public/data/deals.json`
+- Logo assets consolidated into: `NU_Savings/public/logos/`
+- Homepage images consolidated into: `NU_Savings/public/images/`
+- New site content config file added: `NU_Savings/src/data/siteContent.json`
+- Footer social logos, homepage hero images, and featured deals are no longer hardcoded in components — they are now read from the unified config
+- New asset path resolution utility added: `NU_Savings/src/lib/assets.js`
 
-### 3. 图片与体积优化
+### 3. Image & Bundle Size Optimization
 
-- 首页三张大图从 PNG 转为 JPEG，显著降低体积。
-- 为非首屏图片增加 `loading="lazy"` 和 `decoding="async"`。
-- 使用 `content-visibility` 优化部分页面区块渲染。
-- 构建产物总体积明显下降，首页资源加载压力降低。
+- Converted the three homepage hero images from PNG to JPEG, significantly reducing file size
+- Added `loading="lazy"` and `decoding="async"` to below-the-fold images
+- Applied `content-visibility` to optimize rendering of certain page sections
+- Overall build output size reduced noticeably; homepage asset load pressure decreased
 
-### 4. 构建与部署优化
+### 4. Build & Deployment Optimization
 
-- 调整 `vite.config.js`，补充构建目标和 vendor chunk 拆分。
-- 优化 GitHub Pages 部署工作流：
-  - 自动部署分支调整为 `main` 和 `master`
-  - 增加构建超时限制
-  - 增加 artifact 输出检查
-- 已验证以下命令可通过：
+- Updated `vite.config.js` with build targets and vendor chunk splitting
+- Improved the GitHub Pages deployment workflow:
+  - Auto-deploy branches updated to `main` and `master`
+  - Added build timeout limit
+  - Added artifact output verification
+- Confirmed the following commands pass successfully:
 
 ```bash
 cd NU_Savings
@@ -132,25 +127,24 @@ npm run lint
 npm run build
 ```
 
-### 5. 文档整理
+### 5. Documentation
 
-- 新增团队使用文档：
-  - `DEPLOYMENT.md`
-- 将部署文档改写为适合组员使用的版本，去除了个人路径和个人信息。
-- 在部署文档中加入当前开发分支 GitHub 链接。
-- 重写根目录 `README.md`，使其成为仓库主说明。
-- 清理 `NU_Savings/README.md` 中原有的 Vite 模板内容，改为简洁说明。
+- New team usage guide added: `DEPLOYMENT.md`
+- Rewrote the deployment doc to be team-friendly, removing personal paths and personal information
+- Added current development branch GitHub link to the deployment doc
+- Rewrote the root `README.md` to serve as the main repository overview
+- Cleaned up `NU_Savings/README.md`, replacing the original Vite template content with a concise description
 
-### 6. 仓库结构清理
+### 6. Repository Structure Cleanup
 
-- 将 `.gitignore` 规则统一到仓库根目录。
-- 删除子目录中的重复 `.gitignore`。
-- 保持当前 `NU_Savings/` 子目录结构不变，避免在 pre 前引入额外构建风险。
+- Consolidated `.gitignore` rules into the repository root
+- Removed duplicate `.gitignore` from subdirectories
+- Kept the existing `NU_Savings/` subdirectory structure unchanged to avoid introducing additional build risk before the presentation
 
-### 7. 当前结果
+### 7. Results
 
-- 首页首屏更轻
-- 折扣目录页加载更稳
-- 资源替换方式更统一
-- 部署流程更清晰
-- 文档更适合团队协作使用
+- Homepage initial load is lighter
+- Discounts directory page loads more reliably
+- Asset replacement process is more consistent
+- Deployment workflow is clearer
+- Documentation is better suited for team collaboration
