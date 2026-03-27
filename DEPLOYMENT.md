@@ -2,6 +2,8 @@
 
 This document explains how to run the project locally, edit content, build, deploy, and publish the site stably via GitHub Pages.
 
+https://docs.google.com/spreadsheets/d/136aMrqviizP9D_3QsD2lEIFHM2Z_h85T29nureU7Y8A/edit?usp=sharing
+
 ---
 
 ## 1. Project Overview
