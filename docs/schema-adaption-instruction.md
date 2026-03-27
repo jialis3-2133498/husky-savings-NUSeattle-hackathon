@@ -1,35 +1,35 @@
-# Schema 适配说明
+# Schema Adaptation Guide
 
-本文档用于指导后续负责 Google Sheets schema 适配的组员完成代码调整工作。
+This document is intended to guide the team member responsible for adapting the Google Sheets schema to complete the necessary code changes.
 
-## 目标
+## Goal
 
-将 Google Sheets 的 CSV schema 与当前网站的构建前同步流程对齐，使其满足以下要求：
+Align the Google Sheets CSV schema with the pre-build sync process so that the following requirements are met:
 
-- `npm run sync:deals` 可以成功生成 `NU_Savings/public/data/deals.json`
-- 前端页面继续直接读取生成后的静态 JSON
-- 不需要额外修改前端页面的数据展示逻辑
-- `npm run lint` 和 `npm run build` 均可通过
+- `npm run sync:deals` successfully generates `NU_Savings/public/data/deals.json`
+- The frontend continues to read directly from the generated static JSON
+- No changes are needed to the frontend data display logic
+- Both `npm run lint` and `npm run build` pass
 
-## 需要优先查看的文件
+## Files to Review First
 
 - `NU_Savings/scripts/sync-deals.mjs`
 - `NU_Savings/src/lib/dealsApi.js`
 - `DEPLOYMENT.md`
 
-## 开始修改前需要先确认的信息
+## Confirm Before Making Any Changes
 
-在改代码之前，请先确认 Google Sheets 的最终 schema：
+Before touching any code, confirm the final schema of the Google Sheet:
 
-- 最终列名是什么
-- 哪些字段是必填
-- 哪些字段是可选
-- 日期字段是什么格式
-- 图片字段存储的是什么内容
+- What are the final column names?
+- Which fields are required?
+- Which fields are optional?
+- What format is the date field in?
+- What does the image field contain?
 
-## 当前默认期望的核心字段
+## Current Expected Core Fields
 
-当前同步逻辑默认期望这些标准字段：
+The sync logic currently expects these standard fields:
 
 - `id`
 - `record_type`
@@ -42,112 +42,108 @@
 - `last_verified`
 - `image`
 
-如果 Google Sheets 的列名与这些字段不一致，需要修改字段映射逻辑。
+If the Google Sheets column names don't match these, the field mapping logic will need to be updated.
 
-## 需要修改的代码部分
+---
 
-### 1. 表头映射
+## What to Change
 
-文件：
+### 1. Header Mapping
 
-- `NU_Savings/scripts/sync-deals.mjs`
+**File:** `NU_Savings/scripts/sync-deals.mjs`
 
-重点查看：
+**Look for:** `HEADER_ALIASES`
 
-- `HEADER_ALIASES`
+**Purpose:** Maps Google Sheets column names to the standard field names used by the frontend.
 
-作用：
-
-- 将 Google Sheets 的列名映射为当前前端使用的标准字段名
-
-例如，如果 Google Sheets 中的列名是：
+For example, if the Google Sheet uses column names like:
 
 - `benefit type`
 - `verified date`
 - `logo path`
 
-那么需要把这些别名补充进 `HEADER_ALIASES`。
+These aliases need to be added to `HEADER_ALIASES`.
 
-### 2. 行数据标准化
+---
 
-文件：
+### 2. Row Data Normalization
 
-- `NU_Savings/scripts/sync-deals.mjs`
+**File:** `NU_Savings/scripts/sync-deals.mjs`
 
-重点查看：
+**Look for:** `normalizeDeal`
 
-- `normalizeDeal`
+**Purpose:**
 
-作用：
+- Defines which fields are required
+- Defines which fields allow default values
+- Transforms each row into the final structure written to `deals.json`
 
-- 定义哪些字段是必填
-- 定义哪些字段允许默认值
-- 把每一行数据转换成最终写入 `deals.json` 的结构
+Update this function if the schema has:
 
-如果 schema 中：
+- Changed field names
+- New fields added
+- Changed required/optional rules
+- Changed default value logic
 
-- 字段名称变化
-- 有新增字段
-- 必填规则变化
-- 默认值逻辑变化
+---
 
-都需要在这里调整。
+### 3. CSV Row Mapping
 
-### 3. CSV 行映射
+**File:** `NU_Savings/scripts/sync-deals.mjs`
 
-文件：
+**Look for:** `mapRow`
 
-- `NU_Savings/scripts/sync-deals.mjs`
+**Purpose:**
 
-重点查看：
+- Parses each CSV row into an object
+- Matches column values to column names before normalization
 
-- `mapRow`
+---
 
-作用：
+### 4. Image Field Adaptation
 
-- 将 CSV 的每一行解析成对象
-- 在进入最终标准化前，把列值与列名匹配起来
+If the image field in the schema is not already in the recommended relative path format, e.g.:
 
-### 4. 图片字段适配
-
-如果 schema 中的图片字段不是当前推荐的相对路径格式，例如不是：
-
-```text
+```
 logos/target_logo.jpeg
 ```
 
-则需要检查以下文件：
+Check the following files:
 
 - `NU_Savings/scripts/sync-deals.mjs`
 - `NU_Savings/src/lib/dealsApi.js`
 
-目标是：
+The goal is to ensure that image paths written to `deals.json` can still be correctly resolved by the frontend.
 
-- 最终生成到 `deals.json` 的图片路径仍然能被前端正确解析
+Relative paths are recommended as they are most compatible with the current static asset structure.
 
-推荐继续使用相对路径格式，因为它与当前静态资源结构最兼容。
+---
 
-### 5. 日期字段适配
+### 5. Date Field Adaptation
 
-如果 Google Sheets 中日期字段不是 `YYYY-MM-DD` 格式，需要在：
+If the date field in Google Sheets is not in `YYYY-MM-DD` format, add date normalization logic in:
 
 - `NU_Savings/scripts/sync-deals.mjs`
 
-中加入日期规范化逻辑，确保前端显示稳定且统一。
+This ensures dates display consistently on the frontend.
 
-### 6. 文档同步更新
+---
 
-如果最终 schema 与当前默认说明不一致，还需要同步修改：
+### 6. Update Documentation
+
+If the final schema differs from the current defaults described in the docs, also update:
 
 - `DEPLOYMENT.md`
 
-需要更新的内容包括：
+Sections to update:
 
-- 字段说明
-- Google Sheets 填写规范
-- 本地同步命令示例
+- Field descriptions
+- Google Sheets data entry guidelines
+- Local sync command examples
 
-## 适配完成后本地需要运行的命令
+---
+
+## Commands to Run After Adapting
 
 ```bash
 cd NU_Savings
@@ -156,13 +152,15 @@ npm run lint
 npm run build
 ```
 
-## 适配完成的判断标准
+---
 
-当满足以下条件时，schema 适配可以视为完成：
+## Definition of Done
 
-- `npm run sync:deals` 能成功把 Google Sheets 数据写入 `public/data/deals.json`
-- 生成后的 JSON 字段结构正确
-- 图片路径可以被前端正常显示
-- `npm run lint` 通过
-- `npm run build` 通过
-- 折扣页面能正常显示同步后的数据
+The schema adaptation is complete when all of the following are true:
+
+- `npm run sync:deals` successfully writes Google Sheets data to `public/data/deals.json`
+- The generated JSON has the correct field structure
+- Image paths resolve and display correctly on the frontend
+- `npm run lint` passes
+- `npm run build` passes
+- The discounts page correctly displays the synced data
