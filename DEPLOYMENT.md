@@ -142,6 +142,10 @@ Update the data in Google Sheets, then run from `NU_Savings/`:
 SHEETS_CSV_URL="https://docs.google.com/spreadsheets/d/136aMrqviizP9D_3QsD2lEIFHM2Z_h85T29nureU7Y8A/export?format=csv&gid=0" npm run sync:deals
 ```
 
+For the full team workflow after each Google Sheets update, see:
+
+- `UPDATE_MANUAL.md`
+
 **Google Sheets field reference:**
 
 | Field | Required | Notes |
