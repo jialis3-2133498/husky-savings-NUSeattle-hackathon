@@ -1,41 +1,45 @@
-# Husky Student Savings 部署与使用说明
+# Husky Student Savings — Deployment & Usage Guide
 
-本文档说明如何在本地运行、修改内容、构建、部署，以及如何在 GitHub Pages 上稳定发布当前网站。
+This document explains how to run the project locally, edit content, build, deploy, and publish the site stably via GitHub Pages.
 
-## 1. 项目概览
+---
 
-当前项目是一个基于 React + Vite 的静态网站，部署方式为 GitHub Pages。
+## 1. Project Overview
 
-项目目录说明：
+This project is a static website built with React + Vite, deployed via GitHub Pages.
 
-- 仓库根目录：克隆后的项目根目录
-- 前端项目目录：`NU_Savings/`
-- 部署工作流：`.github/workflows/deploy.yml`
-- 优惠数据文件：`NU_Savings/public/data/deals.json`
-- 数据同步脚本：`NU_Savings/scripts/sync-deals.mjs`
-- Logo 资源目录：`NU_Savings/public/logos/`
-- 首页图片目录：`NU_Savings/public/images/`
+**Directory structure:**
 
-当前网站的关键特点：
+- Repository root: the root directory after cloning
+- Frontend project directory: `NU_Savings/`
+- Deployment workflow: `.github/workflows/deploy.yml`
+- Deals data file: `NU_Savings/public/data/deals.json`
+- Data sync script: `NU_Savings/scripts/sync-deals.mjs`
+- Logo assets directory: `NU_Savings/public/logos/`
+- Homepage images directory: `NU_Savings/public/images/`
 
-- 首页内容优先加载，折扣目录页按需加载
-- 优惠数据来自静态 JSON 文件，适合 GitHub Pages
-- 构建后输出到 `NU_Savings/dist/`
+**Key characteristics:**
 
-仓库链接：
+- Homepage content loads first; the discounts directory page loads on demand
+- Deal data is served from a static JSON file, suitable for GitHub Pages
+- Build output goes to `NU_Savings/dist/`
 
-- 当前开发分支：`https://github.com/jialis3-2133498/husky-savings-NUSeattle-hackathon/tree/refactor/site-architecture`
+**Repository link:**
 
-## 2. 环境要求
+- Current development branch: `https://github.com/jialis3-2133498/husky-savings-NUSeattle-hackathon/tree/refactor/site-architecture`
 
-建议环境：
+---
 
-- Node.js 20 或更高版本
-- npm 10 或更高版本
+## 2. Requirements
+
+Recommended environment:
+
+- Node.js 20 or higher
+- npm 10 or higher
 - Git
-- GitHub 仓库写入权限
+- Write access to the GitHub repository
 
-检查版本命令：
+Check your versions:
 
 ```bash
 node -v
@@ -43,147 +47,123 @@ npm -v
 git --version
 ```
 
-## 3. 首次安装
+---
 
-先将仓库克隆到本地，然后进入前端目录安装依赖。
+## 3. Initial Setup
 
-克隆仓库：
+Clone the repository and install dependencies.
 
 ```bash
 git clone https://github.com/jialis3-2133498/husky-savings-NUSeattle-hackathon.git
 cd husky-savings-NUSeattle-hackathon
 ```
 
-安装依赖：
+Install dependencies:
 
 ```bash
 cd NU_Savings
 npm ci
 ```
 
-如果只是快速安装，也可以使用：
+For a quick install you can also use:
 
 ```bash
 npm install
 ```
 
-推荐优先使用 `npm ci`，因为它更适合团队协作和稳定复现。
+`npm ci` is preferred for team collaboration and reproducible builds.
 
-## 4. 本地开发
+---
 
-启动本地开发服务器：
+## 4. Local Development
+
+Start the local dev server:
 
 ```bash
 cd NU_Savings
 npm run dev
 ```
 
-启动后，终端会显示本地访问地址，通常类似：
+The terminal will display a local URL, typically:
 
-```text
+```
 http://localhost:5173/
 ```
 
-本地开发时建议这样使用：
+**Common local editing tasks:**
 
-- 修改页面结构：编辑 `NU_Savings/src/pages/`、`NU_Savings/src/components/`
-- 修改样式：编辑 `NU_Savings/src/styles/appStyles.js` 和 `NU_Savings/src/App.css`
-- 修改优惠数据：编辑 `NU_Savings/public/data/deals.json` 或通过 Google Sheets 同步
-- 替换 logo：将新图片放入 `NU_Savings/public/logos/`
-- 替换首页图片：将新图片放入 `NU_Savings/public/images/`
+- Page structure: edit files in `NU_Savings/src/pages/` and `NU_Savings/src/components/`
+- Styles: edit `NU_Savings/src/styles/appStyles.js` and `NU_Savings/src/App.css`
+- Deal data: edit `NU_Savings/public/data/deals.json` or sync from Google Sheets
+- Replace logos: place new images in `NU_Savings/public/logos/`
+- Replace homepage images: place new images in `NU_Savings/public/images/`
 
-## 5. 常用命令
+---
 
-在 `NU_Savings/` 目录下执行：
+## 5. Common Commands
 
-启动开发环境：
+Run these from inside the `NU_Savings/` directory:
 
-```bash
-npm run dev
-```
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run lint` | Check code style |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview the production build locally |
 
-检查代码规范：
-
-```bash
-npm run lint
-```
-
-构建生产版本：
-
-```bash
-npm run build
-```
-
-本地预览生产版本：
-
-```bash
-npm run preview
-```
-
-从 Google Sheets 同步优惠数据：
+Sync deal data from Google Sheets:
 
 ```bash
 SHEETS_CSV_URL="https://docs.google.com/spreadsheets/d/136aMrqviizP9D_3QsD2lEIFHM2Z_h85T29nureU7Y8A/export?format=csv&gid=0" npm run sync:deals
 ```
 
-推荐发布前至少执行这两个命令：
+Before every release, always run at minimum:
 
 ```bash
 npm run lint
 npm run build
 ```
 
-## 6. 优惠数据如何修改
+---
 
-当前优惠数据支持两种修改方式：
+## 6. Editing Deal Data
 
-**方式一：直接编辑 JSON 文件**
+There are two ways to update deal data:
 
-直接修改 `NU_Savings/public/data/deals.json`。
+### Option A: Edit the JSON file directly
 
-**方式二：通过 Google Sheets 同步（推荐）**
+Edit `NU_Savings/public/data/deals.json`.
 
-在 Google Sheets 中修改数据后，在 `NU_Savings/` 目录下运行：
+### Option B: Sync from Google Sheets (recommended)
+
+Update the data in Google Sheets, then run from `NU_Savings/`:
 
 ```bash
 SHEETS_CSV_URL="https://docs.google.com/spreadsheets/d/136aMrqviizP9D_3QsD2lEIFHM2Z_h85T29nureU7Y8A/export?format=csv&gid=0" npm run sync:deals
 ```
 
-Google Sheets 当前字段说明：
+**Google Sheets field reference:**
 
-| 字段 | 是否必填 | 说明 |
-|------|---------|------|
-| `id` | 否（自动生成） | 唯一标识，不能重复 |
-| `record_type` | 否（默认 `benefit`） | `benefit` 或 `resource` |
-| `category` | 是 | 见下方分类列表 |
-| `name` | 是 | 优惠名称 |
-| `url` | 是 | 外部链接 |
-| `description` | 否 | 描述文案 |
-| `benefit_type` | 否（默认 `discount`） | 见下方类型列表 |
-| `source_type` | 否（默认 `official`） | `official` 或 `third_party` |
-| `last_verified` | 否（默认今日） | 格式 `YYYY-MM-DD` |
-| `image` | 否 | 图片相对路径，如 `logos/target_logo.jpeg` |
+| Field | Required | Notes |
+|-------|----------|-------|
+| `id` | No (auto-generated) | Must be unique |
+| `record_type` | No (default: `benefit`) | `benefit` or `resource` |
+| `category` | Yes | See category list below |
+| `name` | Yes | Name of the deal |
+| `url` | Yes | External link |
+| `description` | No | Description text |
+| `benefit_type` | No (default: `discount`) | See type list below |
+| `source_type` | No (default: `official`) | `official` or `third_party` |
+| `last_verified` | No (default: today) | Format: `YYYY-MM-DD` |
+| `image` | No | Relative path, e.g. `logos/target_logo.jpeg` |
 
-category 可用值：
-- `campus_life`
-- `entertainment`
-- `transportation`
-- `wellness`
-- `food`
-- `retail`
-- `travel`
-- `technology`
+**Available `category` values:**
+`campus_life`, `entertainment`, `transportation`, `wellness`, `food`, `retail`, `travel`, `technology`
 
-benefit_type 可用值：
-- `discount`
-- `free_access`
-- `bundle`
-- `subscription`
-- `platform`
-- `reimbursement`
-- `directory`
+**Available `benefit_type` values:**
+`discount`, `free_access`, `bundle`, `subscription`, `platform`, `reimbursement`, `directory`
 
-每一条数据的基本结构示例：
+**Example entry:**
 
 ```json
 {
@@ -200,64 +180,57 @@ benefit_type 可用值：
 }
 ```
 
-修改数据时的注意事项：
+**Important notes when editing data:**
 
-- `id` 必须唯一
-- `url` 建议使用 `https://`
-- `image` 对应的文件必须真实存在于 `NU_Savings/public/logos/`
-- 修改 JSON 后务必执行：
+- `id` must be unique across all entries
+- Use `https://` for all URLs
+- The file referenced in `image` must exist in `NU_Savings/public/logos/`
+- After editing the JSON, always run `npm run build`
+- Malformed JSON will cause build or runtime errors
 
-```bash
-npm run build
+---
+
+## 7. Replacing Image Assets
+
+### 7.1 Replace a logo
+
+Place the logo file in:
+
 ```
-
-如果 JSON 格式写错，构建或运行时会出问题。
-
-## 7. 图片资源如何替换
-
-### 7.1 替换 logo
-
-把 logo 文件放入：
-
-```text
 NU_Savings/public/logos/
 ```
 
-然后在 `NU_Savings/public/data/deals.json` 中更新对应的 `image` 字段，例如：
+Then update the `image` field in `NU_Savings/public/data/deals.json`:
 
 ```json
 "image": "logos/new_logo.png"
 ```
 
-### 7.2 替换首页大图
+### 7.2 Replace homepage images
 
-首页当前使用这三个文件：
+The homepage currently uses these three files:
 
 - `NU_Savings/public/images/home_top.jpg`
 - `NU_Savings/public/images/home_middle.jpg`
 - `NU_Savings/public/images/home_foot.jpg`
 
-如果替换图片，建议：
+Recommendations when replacing:
 
-- 优先使用 `.jpg`
-- 尽量压缩体积
-- 保持文件名不变，这样不需要改代码
+- Prefer `.jpg` format
+- Compress file sizes where possible
+- Keep the same filenames to avoid code changes
 
-如果文件名改变，需要同步修改：
+If you change the filenames, update the references in:
 
-`NU_Savings/src/pages/HomePage.jsx`
+```
+NU_Savings/src/pages/HomePage.jsx
+```
 
-## 8. 本地发布前检查
+---
 
-建议每次正式发布前执行以下步骤：
+## 8. Pre-Release Checklist
 
-1. 拉取最新代码
-2. 安装依赖
-3. 运行 lint
-4. 运行 build
-5. 本地 preview 检查页面
-
-完整命令示例：
+Before every official release, run through these steps:
 
 ```bash
 cd husky-savings-NUSeattle-hackathon
@@ -269,40 +242,39 @@ npm run build
 npm run preview
 ```
 
-重点检查：
+**Things to verify in preview:**
 
-- 首页是否能正常打开
-- 点击 `Browse Discounts` 是否进入目录页
-- 搜索和分类筛选是否正常
-- 每张卡片的 `Learn More` 是否可点击
-- GitHub Pages 路径是否正确
-- 图片是否都能显示
+- Homepage loads correctly
+- Clicking "Browse Discounts" navigates to the directory page
+- Search and category filters work
+- Each card's "Learn More" link is clickable
+- GitHub Pages paths are correct
+- All images display properly
 
-## 9. GitHub Pages 部署方式
+---
 
-当前项目通过 GitHub Actions 自动部署。
+## 9. GitHub Pages Deployment
 
-工作流文件：
+The project deploys automatically via GitHub Actions.
 
-`.github/workflows/deploy.yml`
+**Workflow file:** `.github/workflows/deploy.yml`
 
-当前配置下，以下分支 push 后会触发部署：
-
+Pushes to these branches trigger auto-deployment:
 - `main`
 - `master`
 
-也可以手动触发部署：
+**To trigger deployment manually:**
 
-- 打开 GitHub 仓库页面
-- 进入 `Actions`
-- 选择 `Deploy Vite site to GitHub Pages`
-- 点击 `Run workflow`
+1. Open the GitHub repository
+2. Go to **Actions**
+3. Select **Deploy Vite site to GitHub Pages**
+4. Click **Run workflow**
 
-## 10. 推荐发布流程
+---
 
-### 方案 A：最推荐
+## 10. Recommended Release Workflows
 
-适合正式演示前的稳定发布。
+### Option A: Recommended for stable releases
 
 ```bash
 cd husky-savings-NUSeattle-hackathon
@@ -319,17 +291,11 @@ git commit -m "Prepare presentation release"
 git push origin main
 ```
 
-推送到 `main` 后，GitHub Actions 会自动构建并部署。
+Pushing to `main` triggers GitHub Actions to build and deploy automatically.
 
-### 方案 B：当前开发分支先合并再发版
+### Option B: Merge feature branch then release
 
-如果你当前在功能分支，例如：
-
-```text
-refactor/site-architecture
-```
-
-可以这样做：
+If you're currently on a feature branch (e.g. `refactor/site-architecture`):
 
 ```bash
 cd husky-savings-NUSeattle-hackathon
@@ -348,178 +314,173 @@ git merge refactor/site-architecture
 git push origin main
 ```
 
-这样最终还是由 `main` 触发 GitHub Pages 自动部署。
+This ensures `main` triggers the GitHub Pages deployment.
 
-## 11. 如何确认部署成功
+---
 
-### 11.1 在 GitHub 上确认
+## 11. Confirming a Successful Deployment
 
-打开仓库的 `Actions` 页面，查看最新工作流是否成功：
+### 11.1 Check GitHub Actions
 
-- `build` 成功
-- `deploy` 成功
+Open the **Actions** tab in the repository and verify the latest workflow run shows:
 
-### 11.2 在 Pages 设置中确认
+- `build` ✅
+- `deploy` ✅
 
-GitHub 仓库页面：
+### 11.2 Check Pages settings
 
-- `Settings`
-- `Pages`
+Go to **Settings → Pages** and confirm:
 
-确认来源为 GitHub Actions，页面地址正常生成。
+- Source is set to **GitHub Actions**
+- The page URL is generated correctly
 
-### 11.3 打开线上地址检查
+### 11.3 Visit the live site
 
-线上地址通常类似：
+The live URL will look like:
 
-```text
+```
 https://<github-username>.github.io/husky-savings-NUSeattle-hackathon/
 ```
 
-检查以下内容：
+Check:
 
-- 首页正常显示
-- 图片正常显示
-- 点击 `Perks and Benefits` 正常进入目录页
-- 直接访问带 hash 的链接正常：
+- Homepage displays correctly
+- Images display correctly
+- Clicking "Perks and Benefits" navigates to the directory page
+- Direct hash links work:
 
-```text
+```
 https://<github-username>.github.io/husky-savings-NUSeattle-hackathon/#discounts
 ```
 
-## 12. 当前部署依赖的关键配置
+---
 
-### 12.1 Vite base 路径
+## 12. Critical Configuration
 
-文件：
+### 12.1 Vite base path
 
-`NU_Savings/vite.config.js`
+**File:** `NU_Savings/vite.config.js`
 
-当前配置：
+Current setting:
 
 ```js
 base: '/husky-savings-NUSeattle-hackathon/'
 ```
 
-如果将来 GitHub 仓库名改变，这一项也必须一起改，否则静态资源路径会出错。
+If the GitHub repository name ever changes, this value must be updated to match, otherwise static assets will fail to load.
 
-例如仓库名改成 `husky-savings-site`，那么需要改成：
+Example — if the repo is renamed to `husky-savings-site`:
 
 ```js
 base: '/husky-savings-site/'
 ```
 
-### 12.2 GitHub Actions 触发分支
+### 12.2 GitHub Actions trigger branches
 
-文件：
+**File:** `.github/workflows/deploy.yml`
 
-`.github/workflows/deploy.yml`
-
-当前只会自动部署：
-
+Currently only these branches trigger auto-deployment:
 - `main`
 - `master`
 
-如果团队决定使用别的发布分支，需要同步修改这里。
+If the team adopts a different release branch, update this file accordingly.
 
-## 13. 常见问题排查
+---
 
-### 13.1 页面打开了，但图片不显示
+## 13. Troubleshooting
 
-排查顺序：
+### 13.1 Page loads but images are missing
 
-1. 检查图片文件是否存在于 `public/logos/` 或 `public/images/`
-2. 检查 `deals.json` 中的 `image` 路径是否正确
-3. 检查仓库名是否变化但 `vite.config.js` 里的 `base` 没改
-4. 重新执行：
+Check in order:
 
-```bash
-npm run build
-```
+1. Confirm the image file exists in `public/logos/` or `public/images/`
+2. Confirm the `image` path in `deals.json` is correct
+3. Check if the repo was renamed but `vite.config.js` `base` was not updated
+4. Re-run `npm run build`
 
-### 13.2 本地能跑，线上 404
+### 13.2 Works locally but returns 404 in production
 
-通常检查这几项：
+Check:
 
-- GitHub Pages 是否已启用
-- workflow 是否执行成功
-- `vite.config.js` 的 `base` 是否正确
-- 访问地址是否与仓库名一致
+- GitHub Pages is enabled for the repo
+- The GitHub Actions workflow completed successfully
+- `base` in `vite.config.js` matches the repository name
+- The URL you're visiting matches the repo name exactly
 
-### 13.3 push 后没有自动部署
+### 13.3 Push didn't trigger auto-deployment
 
-检查：
+Check:
 
-- 是否 push 到 `main` 或 `master`
-- 是否只是 push 到其他功能分支
-- GitHub Actions 是否被仓库权限限制
+- You pushed to `main` or `master`, not a feature branch
+- GitHub Actions isn't restricted by repository permissions
 
-如果不在自动部署分支上，可以手动进入 GitHub Actions 页面执行 `Run workflow`。
+If not on an auto-deploy branch, manually trigger via **Actions → Run workflow**.
 
-### 13.4 `npm run build` 失败
+### 13.4 `npm run build` fails
 
-先执行：
+Run `npm ci` first, then retry:
 
 ```bash
 npm ci
-```
-
-然后再执行：
-
-```bash
 npm run build
 ```
 
-如果还是失败，再检查：
+If it still fails, check:
 
-- `deals.json` 是否格式错误
-- 图片路径是否写错
-- 代码是否存在语法错误
+- `deals.json` for formatting errors
+- Image paths for typos
+- Source code for syntax errors
 
-### 13.5 `npm run lint` 失败
+### 13.5 `npm run lint` fails
 
-说明代码风格或 React Hooks 使用不符合当前 ESLint 规则。建议先根据终端提示修复，再进行正式发布。
+This means the code has style issues or violates ESLint/React Hooks rules. Fix the issues shown in the terminal before releasing.
 
-### 13.6 `npm run sync:deals` 失败
+### 13.6 `npm run sync:deals` fails
 
-检查：
+Check:
 
-- `SHEETS_CSV_URL` 是否正确设置
-- Google Sheets 是否设置为"知道链接的任何人可查看"
-- CSV 中 `name`、`category`、`url` 三个必填列是否有空值
+- `SHEETS_CSV_URL` is set correctly
+- The Google Sheet is set to "Anyone with the link can view"
+- The required columns `name`, `category`, and `url` have no empty values
 
-## 14. 演示前建议
+---
 
-为了保证四天后的 pre 稳定运行，建议至少提前一天完成以下操作：
+## 14. Pre-Demo Checklist
 
-1. 确认演示使用的最终分支
-2. 把最终版本部署到 GitHub Pages
-3. 用不同设备访问一次线上站点
-4. 检查校园网络下是否能打开
-5. 准备一个本地开发版兜底
+To ensure a stable demo, complete the following at least one day before:
 
-建议保留两个可用入口：
+1. Confirm the final branch to use for the demo
+2. Deploy the final version to GitHub Pages
+3. Access the live site from multiple devices
+4. Test on the campus network
+5. Have a local dev fallback ready (`npm run dev`)
 
-- 线上正式地址：用于演示
-- 本地 `npm run dev`：用于网络异常时兜底
+**Keep two entry points available:**
 
-## 15. 团队协作建议
+- Live URL — for the demo
+- Local `npm run dev` — as a fallback if the network is unreliable
 
-如果多人一起改内容，建议遵循以下流程：
+---
 
-- 结构和代码改动走功能分支
-- 优惠内容改动优先通过 Google Sheets 维护，同步后 commit `deals.json`
-- 发布前统一由一人负责合并到 `main`
-- 每次发布前固定执行：
+## 15. Team Collaboration Guidelines
+
+If multiple people are editing content:
+
+- Code and structural changes should go through feature branches
+- Deal content changes should be maintained in Google Sheets; commit `deals.json` after syncing
+- One person should be responsible for merging to `main` before each release
+- Always run before every release:
 
 ```bash
 npm run lint
 npm run build
 ```
 
-## 16. 当前最关键的文件
+---
 
-如果只看最重要的几个文件，优先关注：
+## 16. Most Important Files
+
+If you only need to focus on a few key files:
 
 - `.github/workflows/deploy.yml`
 - `NU_Savings/vite.config.js`
@@ -528,9 +489,11 @@ npm run build
 - `NU_Savings/src/pages/HomePage.jsx`
 - `NU_Savings/src/pages/DiscountsPage.jsx`
 
-## 17. 一套最短可执行流程
+---
 
-如果你现在只想快速完成一次可上线部署，可以直接按下面执行：
+## 17. Quickstart: Minimal Deploy Flow
+
+If you just want to do a quick deploy right now:
 
 ```bash
 cd husky-savings-NUSeattle-hackathon/NU_Savings
@@ -543,4 +506,4 @@ git commit -m "Deploy latest version"
 git push origin main
 ```
 
-完成后去 GitHub `Actions` 页面确认部署成功，再打开线上地址检查页面即可。
+Then go to the **Actions** tab on GitHub to confirm the deployment succeeded, and open the live URL to verify the page looks correct.
