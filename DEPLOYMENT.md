@@ -12,6 +12,7 @@
 - 前端项目目录：`NU_Savings/`
 - 部署工作流：`.github/workflows/deploy.yml`
 - 优惠数据文件：`NU_Savings/public/data/deals.json`
+- 数据同步脚本：`NU_Savings/scripts/sync-deals.mjs`
 - Logo 资源目录：`NU_Savings/public/logos/`
 - 首页图片目录：`NU_Savings/public/images/`
 
@@ -20,7 +21,6 @@
 - 首页内容优先加载，折扣目录页按需加载
 - 优惠数据来自静态 JSON 文件，适合 GitHub Pages
 - 构建后输出到 `NU_Savings/dist/`
-- 支持在构建前从 Google Sheets CSV 同步折扣数据
 
 仓库链接：
 
@@ -88,7 +88,7 @@ http://localhost:5173/
 
 - 修改页面结构：编辑 `NU_Savings/src/pages/`、`NU_Savings/src/components/`
 - 修改样式：编辑 `NU_Savings/src/styles/appStyles.js` 和 `NU_Savings/src/App.css`
-- 修改优惠数据：编辑 `NU_Savings/public/data/deals.json`
+- 修改优惠数据：编辑 `NU_Savings/public/data/deals.json` 或通过 Google Sheets 同步
 - 替换 logo：将新图片放入 `NU_Savings/public/logos/`
 - 替换首页图片：将新图片放入 `NU_Savings/public/images/`
 
@@ -120,26 +120,68 @@ npm run build
 npm run preview
 ```
 
+从 Google Sheets 同步优惠数据：
+
+```bash
+SHEETS_CSV_URL="https://docs.google.com/spreadsheets/d/136aMrqviizP9D_3QsD2lEIFHM2Z_h85T29nureU7Y8A/export?format=csv&gid=0" npm run sync:deals
+```
+
 推荐发布前至少执行这两个命令：
 
 ```bash
 npm run lint
-npm run sync:deals
 npm run build
 ```
 
 ## 6. 优惠数据如何修改
 
-当前网站对外仍然使用静态数据文件：
+当前优惠数据支持两种修改方式：
 
-`NU_Savings/public/data/deals.json`
+**方式一：直接编辑 JSON 文件**
 
-推荐的数据维护方式已经改为：
+直接修改 `NU_Savings/public/data/deals.json`。
 
-- 日常内容维护在 Google Sheets
-- 构建前执行同步脚本
-- 由脚本生成新的 `deals.json`
-- 如果同步失败，则继续使用仓库中已有的旧 `deals.json`
+**方式二：通过 Google Sheets 同步（推荐）**
+
+在 Google Sheets 中修改数据后，在 `NU_Savings/` 目录下运行：
+
+```bash
+SHEETS_CSV_URL="https://docs.google.com/spreadsheets/d/136aMrqviizP9D_3QsD2lEIFHM2Z_h85T29nureU7Y8A/export?format=csv&gid=0" npm run sync:deals
+```
+
+Google Sheets 当前字段说明：
+
+| 字段 | 是否必填 | 说明 |
+|------|---------|------|
+| `id` | 否（自动生成） | 唯一标识，不能重复 |
+| `record_type` | 否（默认 `benefit`） | `benefit` 或 `resource` |
+| `category` | 是 | 见下方分类列表 |
+| `name` | 是 | 优惠名称 |
+| `url` | 是 | 外部链接 |
+| `description` | 否 | 描述文案 |
+| `benefit_type` | 否（默认 `discount`） | 见下方类型列表 |
+| `source_type` | 否（默认 `official`） | `official` 或 `third_party` |
+| `last_verified` | 否（默认今日） | 格式 `YYYY-MM-DD` |
+| `image` | 否 | 图片相对路径，如 `logos/target_logo.jpeg` |
+
+category 可用值：
+- `campus_life`
+- `entertainment`
+- `transportation`
+- `wellness`
+- `food`
+- `retail`
+- `travel`
+- `technology`
+
+benefit_type 可用值：
+- `discount`
+- `free_access`
+- `bundle`
+- `subscription`
+- `platform`
+- `reimbursement`
+- `directory`
 
 每一条数据的基本结构示例：
 
@@ -158,27 +200,6 @@ npm run build
 }
 ```
 
-字段说明：
-
-- `id`：唯一标识，不能重复
-- `record_type`：记录类型，例如 `benefit`、`resource`
-- `category`：分类，当前建议使用以下值：
-  - `campus_life`
-  - `entertainment`
-  - `transportation`
-  - `wellness`
-  - `food`
-  - `retail`
-  - `travel`
-  - `technology`
-- `name`：优惠名称
-- `url`：外部链接
-- `description`：描述文案
-- `benefit_type`：优惠类型，例如 `discount`、`free_access`、`directory`
-- `source_type`：来源类型，例如 `official`、`third_party`
-- `last_verified`：最后核验日期，建议格式 `YYYY-MM-DD`
-- `image`：图片相对路径，通常写成 `logos/文件名`
-
 修改数据时的注意事项：
 
 - `id` 必须唯一
@@ -191,58 +212,6 @@ npm run build
 ```
 
 如果 JSON 格式写错，构建或运行时会出问题。
-
-## 6.1 Google Sheets 同步方案
-
-当前项目已支持在构建前同步 Google Sheets CSV 数据。
-
-默认约定：
-
-- Google Sheets 使用公开 CSV 导出链接
-- 表头尽量与当前 `deals.json` 字段保持一致
-- `image` 字段建议存相对路径，例如：
-
-```text
-logos/target_logo.jpeg
-```
-
-支持的主要字段：
-
-- `id`
-- `record_type`
-- `category`
-- `name`
-- `url`
-- `description`
-- `benefit_type`
-- `source_type`
-- `last_verified`
-- `image`
-
-推荐在 GitHub 仓库中配置一个 secret：
-
-```text
-SHEETS_CSV_URL
-```
-
-本地手动同步命令：
-
-```bash
-cd NU_Savings
-SHEETS_CSV_URL="your_google_sheets_csv_url" npm run sync:deals
-```
-
-如果没有配置 `SHEETS_CSV_URL`，同步脚本会：
-
-- 跳过同步
-- 保留现有 `public/data/deals.json`
-- 不阻断后续构建
-
-如果拉取 Google Sheets 失败，脚本也会：
-
-- 输出 warning
-- 保留旧数据
-- 允许构建继续执行
 
 ## 7. 图片资源如何替换
 
@@ -296,7 +265,6 @@ git pull
 cd NU_Savings
 npm ci
 npm run lint
-SHEETS_CSV_URL="your_google_sheets_csv_url" npm run sync:deals
 npm run build
 npm run preview
 ```
@@ -322,18 +290,6 @@ npm run preview
 
 - `main`
 - `master`
-
-此外，工作流会每 24 小时自动触发一次定时构建更新。
-
-构建前，GitHub Actions 会尝试执行：
-
-```bash
-npm run sync:deals
-```
-
-如果同步成功，会使用新生成的静态数据部署。
-
-如果同步失败，则保留仓库中已有的 `deals.json` 并继续构建与部署。
 
 也可以手动触发部署：
 
@@ -519,11 +475,18 @@ npm run build
 - `deals.json` 是否格式错误
 - 图片路径是否写错
 - 代码是否存在语法错误
-- `SHEETS_CSV_URL` 是否未配置或失效
 
 ### 13.5 `npm run lint` 失败
 
 说明代码风格或 React Hooks 使用不符合当前 ESLint 规则。建议先根据终端提示修复，再进行正式发布。
+
+### 13.6 `npm run sync:deals` 失败
+
+检查：
+
+- `SHEETS_CSV_URL` 是否正确设置
+- Google Sheets 是否设置为"知道链接的任何人可查看"
+- CSV 中 `name`、`category`、`url` 三个必填列是否有空值
 
 ## 14. 演示前建议
 
@@ -545,7 +508,7 @@ npm run build
 如果多人一起改内容，建议遵循以下流程：
 
 - 结构和代码改动走功能分支
-- 优惠内容改动集中维护 `public/data/deals.json`
+- 优惠内容改动优先通过 Google Sheets 维护，同步后 commit `deals.json`
 - 发布前统一由一人负责合并到 `main`
 - 每次发布前固定执行：
 
