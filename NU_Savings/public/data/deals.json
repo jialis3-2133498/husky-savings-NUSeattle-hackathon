@@ -3,253 +3,241 @@
     "id": "entertainment_campus_events",
     "record_type": "resource",
     "category": "campus_life",
-    "name": "Campus Events",
+    "name": "campus events",
     "url": "https://studentlifeseattle.sites.northeastern.edu/event-series/list/page/2/",
-    "description": "Official campus events listing with free or subsidized activities for students.",
+    "description": "",
     "benefit_type": "directory",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/NU_logo.png"
+    "image": ""
   },
   {
     "id": "entertainment_free_museum",
     "record_type": "benefit",
     "category": "entertainment",
     "name": "First Thursday Free Museum",
-    "url": "https://www.seattleschild.com/museums-to-explore-for-free-on-first-thursdays-and-fridays/",
-    "description": "Free museum entry on select days across Seattle.",
+    "url": "Free museum admission in Seattle on First Thursdays",
+    "description": "",
     "benefit_type": "free_access",
     "source_type": "third_party",
     "last_verified": "2026-03-21",
-    "image": "logos/seattle_child.png"
+    "image": ""
   },
   {
     "id": "entertainment_nwfilmforum",
     "record_type": "benefit",
     "category": "entertainment",
-    "name": "Northwest Film Forum Member Discount",
-    "url": "https://nwfilmforum.org/join-support/membership/",
-    "description": "Discounted tickets and perks through film forum membership.",
+    "name": "NorthWest Film Forum Member Discount",
+    "url": "Membership - Northwest Film Forum",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/northwest_film_forum_logo.jpeg"
+    "image": ""
   },
   {
     "id": "entertainment_siff",
     "record_type": "benefit",
     "category": "entertainment",
-    "name": "SIFF Downtown Student Discount",
+    "name": "SIFF Downtown Students Discount",
     "url": "https://www.siff.net/cinema/box-office",
-    "description": "Reduced-price movie tickets for students at SIFF Cinema.",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/siff_logo.jpeg"
+    "image": ""
   },
   {
     "id": "entertainment_spotify_hulu",
     "record_type": "benefit",
     "category": "entertainment",
-    "name": "Spotify + Hulu Student Discount",
-    "url": "https://www.hulu.com/student",
-    "description": "Bundled subscription with Spotify Premium and Hulu at a student rate.",
+    "name": "spotify&hulu students discount",
+    "url": "https://www.spotify.com/us/student/",
+    "description": "",
     "benefit_type": "bundle",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/spotify-logo-svgrepo-com.svg"
+    "image": ""
   },
   {
     "id": "entertainment_ikon_pass",
     "record_type": "benefit",
     "category": "entertainment",
-    "name": "Ikon Pass College Offer",
-    "url": "https://huski.club/",
-    "description": "Discounted ski pass pricing for college students.",
+    "name": "ski ikon Pass college offer",
+    "url": "https://huski.club/ikon-pass",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/ikon_logo.jpg"
+    "image": ""
   },
   {
     "id": "transportation_zipcar",
     "record_type": "benefit",
     "category": "transportation",
-    "name": "Zipcar Student Discount",
+    "name": "zipcar student discount",
     "url": "https://www.zipcar.com/universities/northeastern-university",
-    "description": "Reduced membership fees and rates for student car rentals.",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/zipcar_logo.jpg"
+    "image": ""
   },
   {
     "id": "wellness_cyclebar",
-    "record_type": "resource",
-    "category": "wellness",
-    "name": "CycleBar",
+    "record_type": "benefit",
+    "category": "transportation",
+    "name": "cyclebar",
     "url": "https://www.cyclebar.com",
-    "description": "Indoor cycling studio; check for local promotions or student deals.",
+    "description": "",
     "benefit_type": "directory",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/cyclebar_logo.png"
+    "image": ""
   },
   {
     "id": "wellness_gym_cashback_nushp",
     "record_type": "benefit",
     "category": "wellness",
-    "name": "Gym Cash Back via NUSHP Insurance",
+    "name": "gym cash back via NUSHP insurance",
     "url": "https://www.bluecrossma.org/myblue/learn-and-save/ways-to-save/fitness-and-weight-loss",
-    "description": "Insurance-based reimbursement for gym memberships and fitness programs.",
+    "description": "",
     "benefit_type": "reimbursement",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/NUSHP_logo.png"
+    "image": ""
   },
   {
     "id": "food_tgtg",
     "record_type": "resource",
     "category": "food",
-    "name": "Too Good To Go",
+    "name": "TGTG",
     "url": "https://www.toogoodtogo.com/en-us",
-    "description": "Platform to buy discounted surplus food from local restaurants.",
+    "description": "",
     "benefit_type": "platform",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/toogoodtogo_logo.png"
+    "image": ""
   },
   {
     "id": "food_yelp",
     "record_type": "resource",
     "category": "food",
-    "name": "Yelp",
-    "url": "http://yelp.com/",
-    "description": "Platform to discover local businesses, deals, and student-friendly spots.",
+    "name": "yelp",
+    "url": "yelp.com",
+    "description": "",
     "benefit_type": "platform",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/yelp_logo.png"
+    "image": ""
   },
   {
     "id": "retail_computer_discounts",
     "record_type": "benefit",
     "category": "retail",
-    "name": "Computer Discounts",
+    "name": "computer discounts",
     "url": "https://computer-discounts.northeastern.edu/",
-    "description": "University-provided discounts on laptops and tech products.",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/NU_logo.png"
+    "image": ""
   },
   {
     "id": "retail_amazon_prime",
     "record_type": "benefit",
     "category": "retail",
-    "name": "Amazon Prime Student",
+    "name": "Amazon Prime",
     "url": "https://www.amazon.com/joinstudent",
-    "description": "Discounted Amazon Prime membership with student-exclusive pricing.",
+    "description": "",
     "benefit_type": "subscription",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/amazon-160-svgrepo-com.svg"
+    "image": ""
   },
   {
     "id": "retail_target",
     "record_type": "benefit",
     "category": "retail",
-    "name": "Target Student Discount",
+    "name": "Target student discount",
     "url": "https://www.target.com/l/target-circle-college-student-appreciation/-/N-6v01l",
-    "description": "Seasonal discounts and deals available for verified students.",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/target_logo.jpeg"
+    "image": ""
   },
   {
     "id": "retail_ikea",
     "record_type": "benefit",
     "category": "retail",
-    "name": "IKEA Student Discount",
+    "name": "Ikea student discount",
     "url": "https://www.ikea.com/us/en/campaigns/starting-college/college-student-discount-pub60c5c8a0/",
-    "description": "Student promotions and discounts on furniture and home essentials.",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/IKEA_logo.png"
+    "image": ""
   },
   {
     "id": "retail_rakuten",
     "record_type": "resource",
     "category": "retail",
-    "name": "Rakuten",
+    "name": "rakuten cashback",
     "url": "https://www.rakuten.com",
-    "description": "Cashback platform offering savings across multiple online retailers.",
+    "description": "",
     "benefit_type": "platform",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/rakuten_logo.png"
+    "image": ""
   },
   {
     "id": "travel_amtrak",
     "record_type": "benefit",
     "category": "travel",
-    "name": "Amtrak Student Discount",
+    "name": "Amtrack student discount",
     "url": "https://www.amtrak.com/student-discounts",
-    "description": "Discounted train tickets for students on select routes.",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/amtrak_logo.png"
+    "image": ""
   },
   {
     "id": "travel_isic",
     "record_type": "benefit",
     "category": "travel",
-    "name": "ISIC Student Discount",
+    "name": "ISIC student discount",
     "url": "https://isicusa.com/",
-    "description": "International student ID offering global discounts and travel benefits.",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/isic_logo.jpeg"
-  },
-  {
-    "id": "entertainment_amc",
-    "record_type": "benefit",
-    "category": "entertainment",
-    "name": "AMC theater",
-    "url": "https://www.amctheatres.com/discounts/participating-theatres",
-    "description": "Student discounts on selected AMC theaters",
-    "benefit_type": "discount",
-    "source_type": "official",
-    "last_verified": "2026-03-21",
-    "image": "logos/AMC-Theatres-Logo.png"
+    "image": ""
   },
   {
     "id": "travel_studentuniverse",
     "record_type": "benefit",
     "category": "travel",
-    "name": "StudentUniverse Flight Discount",
+    "name": "international students flight discount",
     "url": "https://www.studentuniverse.com",
-    "description": "Discounted flights and travel deals specifically for students.",
+    "description": "",
     "benefit_type": "discount",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/flights_logo.png"
+    "image": ""
   },
   {
     "id": "technology_gemini",
     "record_type": "benefit",
     "category": "technology",
-    "name": "Gemini AI Student Offer",
+    "name": "Gemini AI upgrade free 1 yr also ChatGPT",
     "url": "https://gemini.google/students/",
-    "description": "Free or discounted access to AI tools for students.",
+    "description": "",
     "benefit_type": "free_access",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/gemini_logo.jpeg"
+    "image": ""
   },
   {
     "id": "technology_claude",
@@ -257,11 +245,11 @@
     "category": "technology",
     "name": "Claude",
     "url": "https://claude.northeastern.edu/",
-    "description": "University-provided access to AI assistant tools for students.",
+    "description": "",
     "benefit_type": "free_access",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/claude_logo.jpeg"
+    "image": ""
   },
   {
     "id": "technology_tech_resource",
@@ -269,10 +257,10 @@
     "category": "technology",
     "name": "Tech Resource",
     "url": "https://service.northeastern.edu/tech",
-    "description": "Central hub for campus IT tools, services, and technical support.",
+    "description": "",
     "benefit_type": "directory",
     "source_type": "official",
     "last_verified": "2026-03-21",
-    "image": "logos/NU_logo.png"
+    "image": ""
   }
 ]
