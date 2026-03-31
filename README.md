@@ -135,19 +135,19 @@ See `DEPLOYMENT.md` for full deployment and GitHub Pages setup.
 
 ## Team Contributions
 
-* **Data & Product (Nan Zhang)**
+* **Data & Product**
 
   * Led data collection and curation of student benefits
   * Designed the structured schema for normalizing different types of offers
   * Defined data standards to ensure consistency and scalability
 
-* **Frontend Engineering (Jiali Sheng)**
+* **Frontend Engineering**
 
   * Developed the React-based user interface
   * Implemented data rendering and user interaction flows
   * Ensured responsive and user-friendly design
 
-* **Backend & Data Integration (YuhaoSong)**
+* **Backend & Data Integration**
 
   * Built and maintained data synchronization logic
   * Designed the update pipeline (Google Sheets → JSON)
